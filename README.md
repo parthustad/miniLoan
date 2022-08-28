@@ -10,9 +10,14 @@ PHP 8 and mysql must be installed
 
 ## Installation
 
-run **composer update**
-**set database credentials in env file***
-**run php artisan migrate:fresh --seed**
+1. run **composer update**
+
+2. **Set database credentials in env file***
+
+3. run **php artisan migrate:fresh --seed**
+
+4. run **php artisan serve**
+
 
 ## How to Use
 
