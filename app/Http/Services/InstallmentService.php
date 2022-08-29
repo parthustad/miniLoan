@@ -21,9 +21,9 @@ class InstallmentService
     public function createInstallment(InstallmentRequest $request) : array{
 
         $amount = $request->amount;
+        $loan_id = $request->loan_id;
 
-
-        $loan = Loan::where('id',  $request->loan_id)->first();
+        $loan = Loan::where('id',  $loan_id)->first();
 
         $remaining_amount = $loan->amount - $loan->total_paid;
         $remaining_amount = number_format($remaining_amount, 2, ".", "");
@@ -53,7 +53,7 @@ class InstallmentService
                 $this->setLastPayment($loan);
                 $this->setLoanAsPaid($loan);
 
-                $loan = Loan::where('id',  $request->loan_id)->first();
+                $loan = Loan::where('id', $loan_id)->first();
                 return APIHelpers::createResponse(true,'Loan is settled',new LoanResource($loan));
             }else{
                 return APIHelpers::createResponse(false,'Last payment should be euqal to remaining amount',new LoanResource($loan));
@@ -72,7 +72,7 @@ class InstallmentService
             $this->setTotalPaidAmount($loan,$amount);
             $this->setSchedulePaymentPaidStatus($loan,$amount);
             $this->setLoanAsPaid($loan);
-            $loan = Loan::where('id',  $request->loan_id)->first();
+            $loan = Loan::where('id', $loan_id)->first();
             return APIHelpers::createResponse(true,'Loan is paid in One short',new LoanResource($loan));
 
         }
@@ -82,15 +82,15 @@ class InstallmentService
         $this->setSchedulePaymentPaidStatus($loan,$amount);
 
 
-        $loan = Loan::where('id',  $request->loan_id)->first();
+        $loan = Loan::where('id',  $loan_id)->first();
 
         if($this->isLoanSettled($loan) == true){
             $this->setLoanAsPaid($loan);
-            $loan = Loan::where('id',  $request->loan_id)->first();
+            $loan = Loan::where('id', $loan_id)->first();
             return APIHelpers::createResponse(true,'Loan is settled',new LoanResource($loan));
         }
 
-        $loan = Loan::where('id',  $request->loan_id)->first();
+        $loan = Loan::where('id',  $loan_id)->first();
         return APIHelpers::createResponse(true,'Installment Added',new LoanResource($loan));
 
     }
