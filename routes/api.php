@@ -1,16 +1,18 @@
 <?php
 
-use App\Http\Controllers\LoansController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\InstallmentController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 use App\Models\Loan;
 use App\Models\User;
-use App\Http\Services\InstallmentService;
-use App\Models\SchedulePayment;
 use App\Models\Installments;
+use Illuminate\Http\Request;
+use App\Models\SchedulePayment;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoansController;
+use App\Http\Services\InstallmentService;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\InstallmentController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,21 +24,9 @@ use App\Models\Installments;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/register', [UserController::class,'register'])->name('user.register');
-Route::post('/login', [UserController::class,'login'])->name('login');
+Route::post('/register', RegisterController::class)->name('register');
+Route::post('/login', LoginController::class)->name('login');
 
-
-Route::get('/status', function(Request $request){
-    $installmentService = new InstallmentService();
-    $loan =  Loan::where('id', 1)->first();
-
-    $msg = "-".$loan->amount."-";
-    $msg .= "-".$loan->paid_amount."-";
-    $msg .= "-". ($loan->amount - $loan->total_paid) ."-";
-    return $msg ;
-
-    //return $installmentService->isLoanSettled($loan);
-});
 
 Route::get('/reset', function(Request $request)
 {
@@ -51,18 +41,14 @@ Route::get('/reset', function(Request $request)
 
 });
 
-/*
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::post('/loans', [LoansController::class,'store'])->name('loan.create');
-    Route::get('/loans', [LoansController::class,'index'])->name('loan.create');
-    Route::put('/loans', [LoansController::class,'statusUpdate'])->name('loan.statusUpdate');
+    Route::post('/loans', [LoansController::class,'store'])->name('loans.create');
+    Route::get('/loans', [LoansController::class,'index'])->name('loans.get');
+    Route::put('/loans', [LoansController::class,'statusUpdate'])->name('loans.statusUpdate');
 
     Route::middleware('createInstallment')->group(function () {
-        Route::post('/installments', [InstallmentController::class,'store'])->name('installment.create');
+        Route::post('/installments', [InstallmentController::class,'store'])->name('installments.create');
     });
 });

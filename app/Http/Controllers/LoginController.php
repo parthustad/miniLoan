@@ -13,34 +13,15 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Requests\RegisterUserRequest;
 
 
-class UserController extends Controller
+class LoginController extends Controller
 {
-
-    public $registerService;
-
-    public function __construct(UserService $userService)
+    public function __invoke(UserService $userService, LoginUserRequest $request)
     {
-        $this->userService =  $userService;
-    }
-
-    public function register(RegisterUserRequest $request)
-    {
-          $response = $this->userService->registerUser($request);
-          return response()->json($response, 200);
-
-    }
-
-    public function login(LoginUserRequest $request)
-    {
-          $response = $this->userService->loginUser($request);
+          $response = $userService->loginUser($request);
           if($response['status'] == true){
                return response()->json($response, 200);
           }else{
                return response()->json($response, 401);
           }
     }
-
-
-
-
 }
