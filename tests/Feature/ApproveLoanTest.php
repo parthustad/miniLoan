@@ -60,30 +60,33 @@ class ApproveLoanTest extends TestCase
 
         $user =  User::factory()->create(['role'=>"REVIEWER"]);
         Sanctum::actingAs($user);
-        $response = $this->put(route('loans.statusUpdate'),[
-            'id'=> 15555
-        ], ['accept' => 'application/json']);
-
-        //$user =  Loan::factory()->create(['role'=>"CLIENT"]);
-       $response->assertStatus(422);
-    }
-
-    public function test_loan_alredy_not_approved()
-    {
-        $user =  User::factory()->create(['role'=>"CLIENT"]);
-        Sanctum::actingAs($user);
-
-        $loan =  Loan::factory()->create(['client_id'=> 2,'loan_status'=>'APPROVED']);
-
-        $user =  User::factory()->create(['role'=>"REVIEWER"]);
-        Sanctum::actingAs($user);
 
         $response = $this->put(route('loans.statusUpdate'),[
             'id'=> 1
         ], ['accept' => 'application/json']);
 
-        $data = $response->json();
+        //$user =  Loan::factory()->create(['role'=>"CLIENT"]);
+       $response->assertStatus(200);
+    }
 
+    public function test_loan_alredy_not_approved()
+    {
+        $user =  User::factory()->create(['role'=>"CLIENT"]);
+
+        $client_id = $user->id;
+        Sanctum::actingAs($user);
+
+        $loan =  Loan::factory()->create(['client_id'=> $client_id,'loan_status'=>'APPROVED']);
+
+        $user =  User::factory()->create(['role'=>"REVIEWER"]);
+        Sanctum::actingAs($user);
+
+        $response = $this->put(route('loans.statusUpdate'),[
+            'id'=>  $loan->id
+        ], ['accept' => 'application/json']);
+
+       $data =  $response->json();
+       
         if($data['status']==false){
             $response->assertStatus(200);
         }

@@ -58,6 +58,8 @@ class LoanTest extends TestCase
 
     public function test_user_with_client_role_can_create_loan()
     {
+        $reviewer =  User::factory()->create(['role'=>"REVIEWER"]);
+        
         $user =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($user);
 
@@ -65,6 +67,7 @@ class LoanTest extends TestCase
             'amount'=> 10.00,
             'term'=> 5
         ]);
+        
         $response->assertStatus(200);
     }
 

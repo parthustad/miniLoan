@@ -28,7 +28,11 @@ PHP 8 and mysql must be installed
 
 4. **CreateInstallments** endpoint is used to pay for the installments
 
-.
+
+## Repayment condition checks
+![Screenshot](repayment-checks.png)
+
+
 
 ## Postman Collection
 

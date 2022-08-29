@@ -29,7 +29,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('users');
-            $table->foreign('reviewer_id')->references('id')->on('users');
+            //$table->foreign('reviewer_id')->references('id')->on('users');
 
 
 
