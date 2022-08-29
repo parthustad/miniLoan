@@ -37,7 +37,7 @@ in case of link is working: Json collection is added at root level
 
 ## Test
 
-> This demo does not contain any unit tests since the code does not use any custom standalone code.
+> Feature test is added here test database is MSQYL instead of SQLLITE
 
 ## License
 

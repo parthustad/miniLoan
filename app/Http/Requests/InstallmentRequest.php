@@ -25,7 +25,7 @@ class InstallmentRequest extends FormRequest
     {
         return [
             'loan_id' => 'required|exists:loans,id',
-            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/'     
+            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/'
            ];
     }
 }

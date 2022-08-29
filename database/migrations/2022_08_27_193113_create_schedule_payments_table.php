@@ -19,14 +19,14 @@ return new class extends Migration
             $table->unsignedBigInteger('loan_id');
             $table->unsignedBigInteger('term');
             $table->decimal('amount', 10, 2);
-            $table->string('status')->default('UNPAID');          
-            
-          
+            $table->string('status')->default('UNPAID');
+
+
             $table->timestamp('scheduled_at')->nullable();
             $table->timestamp('paid_at')->nullable();
 
             $table->timestamps();
-            
+
             $table->foreign('client_id')->references('id')->on('users');
             $table->foreign('loan_id')->references('id')->on('loans');
         });

@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('installments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('loan_id');           
+            $table->unsignedBigInteger('loan_id');
             $table->decimal('amount', 10, 2);
-           
+
             $table->timestamps();
-            
+
             $table->foreign('client_id')->references('id')->on('users');
             $table->foreign('loan_id')->references('id')->on('loans');
         });

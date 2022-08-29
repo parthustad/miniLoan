@@ -21,7 +21,12 @@ class InstallmentService
     public function createInstallment(InstallmentRequest $request) : array{
 
         $amount = $request->amount;
+
+
         $loan = Loan::where('id',  $request->loan_id)->first();
+
+        $remaining_amount = $loan->amount - $loan->total_paid;
+        $remaining_amount = number_format($remaining_amount, 2, ".", "");
 
         $response = [];
 
@@ -34,9 +39,10 @@ class InstallmentService
         if($this->isLoanSettled($loan) == true){
             return APIHelpers::createResponse(false,'Loan is already setlled',new LoanResource($loan));
         }
-        if($amount > ($loan->amount - $loan->total_paid)){
+        if($amount > $remaining_amount){
             return APIHelpers::createResponse(false,'Amount is greater than remaining amout',new LoanResource($loan));
         }
+
 
         //Last Installment
         if($this->isLastPayment($loan)){
@@ -53,6 +59,7 @@ class InstallmentService
                 return APIHelpers::createResponse(false,'Last payment should be euqal to remaining amount',new LoanResource($loan));
             }
         }
+
 
         if($this->isGreaterOrEqalToMinPayment($loan, $amount) == false){
             return APIHelpers::createResponse(false,'Amount should be greater or equal to installments',new LoanResource($loan));
@@ -73,6 +80,7 @@ class InstallmentService
         $this->addInstallment($loan,$amount);
         $this->setTotalPaidAmount($loan,$amount);
         $this->setSchedulePaymentPaidStatus($loan,$amount);
+
 
         $loan = Loan::where('id',  $request->loan_id)->first();
 
@@ -105,8 +113,9 @@ class InstallmentService
     }
 
     protected function isGreaterOrEqalToMinPayment($loan,$amount) :bool {
+        $min_payment = number_format($loan->min_payment, 2, ".", "");
 
-        if ($amount >= $loan->min_payment ){
+        if ($amount >= $min_payment){
             return true;
         }else{
             return false;
@@ -125,6 +134,7 @@ class InstallmentService
 
     protected function isLastPayment($loan) :bool {
         $unpaid = SchedulePayment::where(['loan_id'=>$loan->id,'status'=>"UNPAID"])->get()->count();
+
         if($unpaid == 1 ){
             return true;
         }
@@ -132,8 +142,10 @@ class InstallmentService
     }
 
     protected function isLastPaymentValidated($loan,$amount) :bool {
+       $remaining_amount =  $loan->amount - $loan->total_paid;
+       $remaining_amount = number_format($remaining_amount, 2, ".", "");
 
-        if( $amount >= ($loan->amount - $loan->total_paid ) ){
+        if( $amount >= $remaining_amount  ){
             return true;
         }
         return false;
@@ -171,6 +183,7 @@ class InstallmentService
     }
 
     protected function setSchedulePaymentPaidStatus($loan,$amount) : void{
+        $loan = Loan::where('id',  $loan->id)->first();
 
         $min_payment = $loan->min_payment;
         $fraction = (int) (($amount + $loan->extra_amount) / $min_payment );

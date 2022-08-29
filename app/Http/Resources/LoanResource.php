@@ -18,11 +18,11 @@ class LoanResource extends JsonResource
         return [
             'id' => $this->id,
             'client_id' => $this->client_id,
-            'amount' => $this->amount,
+            'amount' => number_format($this->amount, 2, ".", ""),
             'term'=> $this->term,
             'loan_status'=> $this->loan_status,
-            'total_paid'=> $this->total_paid,
-            'min_payment'=> $this->min_payment,
+            'total_paid'=> number_format($this->total_paid, 2, ".", ""),
+            'min_payment'=>  number_format($this->min_payment, 2, ".", ""),
             'installments'=>  InstallmentResource::collection($this->installments)
         ];
     }
