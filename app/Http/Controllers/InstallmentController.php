@@ -13,6 +13,7 @@ class InstallmentController extends Controller
     {
         $this->installmentService = $installmentService;
     }
+
     public function store(InstallmentRequest $request){
         $response = $this->installmentService->createInstallment($request);
         return response()->json($response, 200);

@@ -204,7 +204,6 @@ class InstallmentsFeatureTest extends TestCase
                 'amount'=> $amountsToPay,
                 'loan_id' => $loan_id,
             ], ['accept' => 'application/json']);
-            dd($response->json());
 
         }
 

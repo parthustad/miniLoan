@@ -29,6 +29,7 @@ class UserController extends Controller
           return response()->json($response, 200);
 
     }
+
     public function login(LoginUserRequest $request)
     {
           $response = $this->userService->loginUser($request);

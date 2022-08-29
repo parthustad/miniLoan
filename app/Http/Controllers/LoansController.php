@@ -21,17 +21,19 @@ class LoansController extends Controller
         $this->loanService = $loanService;
 
     }
+
     public function store(LoanRequest $request){
         $response = $this->loanService->createLoan($request);
         return response()->json($response, 200);
     }
+
     public function index(Request $request){
         $response =  $this->loanService->getUserLoan($request);
         return response()->json($response, 200);
     }
-    
+
     public function statusUpdate(ApproveLoanRequest $request){
-        $response = $this->loanService->approveLoan($request);       
+        $response = $this->loanService->approveLoan($request);
         return response()->json($response, 200);
     }
 
