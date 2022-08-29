@@ -65,7 +65,7 @@ class LoanService
 
     }
 
-    public function createSchedulePayment( $id ){
+    protected function createSchedulePayment( $id ){
 
         if( empty(SchedulePayment::where('loan_id', $id)->get()->toArray() )){
 

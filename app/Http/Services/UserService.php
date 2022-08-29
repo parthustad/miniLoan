@@ -30,7 +30,7 @@ class UserService
         return $this->response;
     }
 
-    public function getLoggedinUserByEmail($email)
+    protected function getLoggedinUserByEmail($email)
     {
         $user = User::firstWhere('email', $email);
         $user->token =  $user->createToken("API TOKEN")->plainTextToken;
