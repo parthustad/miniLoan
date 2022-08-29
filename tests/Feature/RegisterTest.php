@@ -25,7 +25,7 @@ class RegisterTest extends TestCase
 
     public function test_registration_without_email()
     {
-        $response = $this->post('/api/register',[
+        $response = $this->post(route('register'),[
             'name'=> "abc",
             'password'=> "12344",
             "role" => "ADMIN"
@@ -37,7 +37,7 @@ class RegisterTest extends TestCase
 
     public function test_registration_without_password()
     {
-        $response = $this->post('/api/register',[
+        $response = $this->post(route('register'),[
             'name'=> "abc",
             'email'=> "p@yahoo.com",
             "role" => "ADMIN"
@@ -50,7 +50,7 @@ class RegisterTest extends TestCase
 
     public function test_with_role_other_than_reviewer_and_client()
     {
-        $response = $this->post('/api/register',[
+        $response = $this->post(route('register'),[
                 'name'=> "abc",
                 'email'=> "p@yahoo.com",
                 'password'=> "12344",
@@ -63,7 +63,7 @@ class RegisterTest extends TestCase
 
     public function test_with_role_client()
     {
-        $response = $this->post('/api/register',[
+        $response = $this->post(route('register'),[
 
                 'name'=> "abc",
                 'email'=> "p@yahoo.com",
@@ -77,8 +77,7 @@ class RegisterTest extends TestCase
 
     public function test_with_role_reviewer()
     {
-        $response = $this->post('/api/register',[
-
+        $response = $this->post(route('register'),[
                 'name'=> "abc",
                 'email'=> "p@yahoo.com",
                 'password'=> "12344",

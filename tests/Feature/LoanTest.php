@@ -25,7 +25,7 @@ class LoanTest extends TestCase
     }
     public function test_gest_user_can_not_create_role()
     {
-        $response = $this->post('/api/loans',[
+        $response = $this->post(route('loans.create'),[
             'amount'=> 10.00,
             'term'=> 5
         ], ['accept' => 'application/json']);
@@ -36,7 +36,7 @@ class LoanTest extends TestCase
         $user =  User::factory()->create(['role'=>"REVIEWER"]);
         Sanctum::actingAs($user);
 
-        $response = $this->post('/api/loans',[
+        $response = $this->post(route('loans.create'),[
             'amount'=> 10.00,
             'term'=> 5
         ]);
@@ -49,7 +49,7 @@ class LoanTest extends TestCase
         $user =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($user);
 
-        $response = $this->post('/api/loans',[
+        $response = $this->post(route('loans.create'),[
             'term'=> 5
         ], ['accept' => 'application/json']);
 
@@ -61,7 +61,7 @@ class LoanTest extends TestCase
         $user =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($user);
 
-        $response = $this->post('/api/loans',[
+        $response = $this->post(route('loans.create'),[
             'amount'=> 10.00,
             'term'=> 5
         ]);

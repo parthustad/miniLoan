@@ -26,7 +26,7 @@ class ApproveLoanTest extends TestCase
     }
     public function test_gest_user_can_not_approve_loan()
     {
-        $response = $this->put('/api/loans',[
+        $response = $this->put(route('loans.statusUpdate'),[
             'id'=> 15
 
         ], ['accept' => 'application/json']);
@@ -39,7 +39,7 @@ class ApproveLoanTest extends TestCase
         $user =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($user);
 
-        $response = $this->put('/api/loans',[
+        $response = $this->put(route('loans.statusUpdate'),[
             'id'=> 1
         ], ['accept' => 'application/json']);
 
@@ -51,7 +51,7 @@ class ApproveLoanTest extends TestCase
         $user =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($user);
 
-        $response = $this->post('/api/loans',[
+        $response = $this->post(route('loans.create'),[
             'amount'=> 10.00,
             'term'=> 5
         ]);
@@ -60,7 +60,7 @@ class ApproveLoanTest extends TestCase
 
         $user =  User::factory()->create(['role'=>"REVIEWER"]);
         Sanctum::actingAs($user);
-        $response = $this->put('/api/loans',[
+        $response = $this->put(route('loans.statusUpdate'),[
             'id'=> 15555
         ], ['accept' => 'application/json']);
 
@@ -78,7 +78,7 @@ class ApproveLoanTest extends TestCase
         $user =  User::factory()->create(['role'=>"REVIEWER"]);
         Sanctum::actingAs($user);
 
-        $response = $this->put('/api/loans',[
+        $response = $this->put(route('loans.statusUpdate'),[
             'id'=> 1
         ], ['accept' => 'application/json']);
 

@@ -26,7 +26,7 @@ class InstallmentsFeatureTest extends TestCase
     }
     public function test_gest_user_can_not_create_installments()
     {
-        $response = $this->post('/api/installments',[
+        $response = $this->post(route('installments.create'),[
             'amount'=> 15,
             'loan_id' => 1
         ], ['accept' => 'application/json']);
@@ -39,7 +39,7 @@ class InstallmentsFeatureTest extends TestCase
         $user =  User::factory()->create(['role'=>"REVIEWER"]);
         Sanctum::actingAs($user);
 
-        $response = $this->post('/api/installments',[
+        $response = $this->post(route('installments.create'),[
             'amount'=> 15,
             'loan_id' => 1
         ], ['accept' => 'application/json']);
@@ -52,7 +52,7 @@ class InstallmentsFeatureTest extends TestCase
         $user =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($user);
 
-        $response = $this->post('/api/installments',[
+        $response = $this->post(route('installments.create'),[
             'amount'=> 15,
             'loan_id' => 45444
         ], ['accept' => 'application/json']);
@@ -67,7 +67,7 @@ class InstallmentsFeatureTest extends TestCase
 
         $loan =  Loan::factory()->create(['client_id'=>  $client->id,'loan_status'=>'PAID','amount'=>10,'term'=>3]);
 
-        $response = $this->post('/api/installments',[
+        $response = $this->post(route('installments.create'),[
             'amount'=> 4,
             'loan_id' => $loan->id
         ], ['accept' => 'application/json']);
@@ -84,7 +84,7 @@ class InstallmentsFeatureTest extends TestCase
         $loan =  Loan::factory()->create(['client_id'=>  $client->id,'loan_status'=>'PENDING','amount'=>10,'term'=>3]);;
 
 
-        $response = $this->post('/api/installments',[
+        $response = $this->post(route('installments.create'),[
             'amount'=> 4,
             'loan_id' => $loan->id
         ], ['accept' => 'application/json']);
@@ -98,10 +98,10 @@ class InstallmentsFeatureTest extends TestCase
         $client =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($client);
 
-        $loan =  Loan::factory()->create(['client_id'=>  $client->id,'loan_status'=>'APPROVED','amount'=>10,'term'=>3]);;
+        $loan =  Loan::factory()->create(['client_id'=>  $client->id,'loan_status'=>'APPROVED','amount'=>10,'term'=>3]);
 
 
-        $response = $this->post('/api/installments',[
+        $response = $this->post(route('installments.create'),[
             'amount'=> 15,
             'loan_id' => $loan->id
         ], ['accept' => 'application/json']);
@@ -115,7 +115,7 @@ class InstallmentsFeatureTest extends TestCase
         $client =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($client);
 
-        $response = $this->post('/api/loans',[
+        $response = $this->post(route('loans.create'),[
             'amount'=> 10.00,
             'term'=> 5
         ]);
@@ -125,13 +125,13 @@ class InstallmentsFeatureTest extends TestCase
         $reviewer =  User::factory()->create(['role'=>"REVIEWER"]);
         Sanctum::actingAs($reviewer);
 
-        $response = $this->put('/api/loans',[
+        $response = $this->put(route('loans.statusUpdate'),[
             'id'=>$loan_id,
         ], ['accept' => 'application/json']);
 
 
         Sanctum::actingAs($client);
-        $response = $this->post('/api/installments',[
+        $response = $this->post(route('installments.create'),[
             'amount'=> 3.33,
             'loan_id' => $loan_id,
         ], ['accept' => 'application/json']);
@@ -175,7 +175,7 @@ class InstallmentsFeatureTest extends TestCase
         $client =  User::factory()->create(['role'=>"CLIENT"]);
         Sanctum::actingAs($client);
 
-        $createLoan = $this->post('/api/loans',[
+        $createLoan = $this->post(route('loans.create'),[
             'amount'=> $loanAmount,
             'term'=> $loanTerm
         ]);
@@ -185,7 +185,7 @@ class InstallmentsFeatureTest extends TestCase
         $reviewer =  User::factory()->create(['role'=>"REVIEWER"]);
         Sanctum::actingAs($reviewer);
 
-        $approveLoan = $this->put('/api/loans',[
+        $approveLoan = $this->put(route('loans.statusUpdate'),[
             'id'=>$loan_id,
         ], ['accept' => 'application/json']);
 
@@ -193,14 +193,14 @@ class InstallmentsFeatureTest extends TestCase
         Sanctum::actingAs($client);
         if(is_array($amountsToPay)){
             foreach($amountsToPay as $amountToPay){
-                $response[] = $this->post('/api/installments',[
+                $response[] = $this->post(route('installments.create'),[
                     'amount'=> $amountToPay,
                     'loan_id' => $loan_id,
                 ], ['accept' => 'application/json']);
 
             }
         }else{
-            $response = $this->post('/api/installments',[
+            $response = $this->post(route('installments.create'),[
                 'amount'=> $amountsToPay,
                 'loan_id' => $loan_id,
             ], ['accept' => 'application/json']);

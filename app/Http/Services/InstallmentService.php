@@ -87,7 +87,7 @@ class InstallmentService
 
     }
 
-    protected function isApproved($loan){
+    public function isApproved($loan){
         if($loan->loan_status == "APPROVED"){
             return true;
         }else{

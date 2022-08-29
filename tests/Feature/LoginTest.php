@@ -23,7 +23,7 @@ class LoginTest extends TestCase
     }
     public function test_login_without_email()
     {
-        $response = $this->post('/api/login',[
+        $response = $this->post(route('login'),[
                 'password'=> "123456"
         ], ['accept' => 'application/json']);
 
@@ -31,7 +31,7 @@ class LoginTest extends TestCase
     }
     public function test_login_without_password()
     {
-        $response = $this->post('/api/login',[
+        $response = $this->post(route('login'),[
                 'email'=> "a@abc.com"
         ], ['accept' => 'application/json']);
 
@@ -40,7 +40,7 @@ class LoginTest extends TestCase
 
     public function test_login_with_invalid_credentials()
     {
-        $response = $this->post('/api/login',[
+        $response = $this->post(route('login'),[
                 'email'=> "reviewer@aspire.io",
                 'password'=> "123456ttt5"
         ], ['accept' => 'application/json']);
@@ -51,7 +51,7 @@ class LoginTest extends TestCase
 
     public function test_login_valid_credentials()
     {
-        $response = $this->post('/api/login',[
+        $response = $this->post(route('login'),[
                 'email'=> "reviewer@aspire.io",
                 'password'=> "123456"
         ]);
