@@ -12,12 +12,11 @@ PHP 8 and mysql must be installed
 
 1. run **composer update**
 
-2. **Set database credentials in env file***
+2. **Set database credentials in env file\***
 
 3. run **php artisan migrate:fresh --seed**
 
 4. run **php artisan serve**
-
 
 ## How to Use
 
@@ -31,9 +30,10 @@ PHP 8 and mysql must be installed
 
 .
 
-## Postman API
+## Postman Collection
 
-Collection is added as json file at root level
+Download Postman Collection, [click here.](https://www.getpostman.com/collections/f8b0e1759d0e8adcfd43)
+in case of link is working: Json collection is added at root level
 
 ## Test
 

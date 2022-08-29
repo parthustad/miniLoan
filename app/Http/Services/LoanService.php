@@ -23,6 +23,7 @@ class LoanService
         $amount =  $request->amount;
         $term =  $request->term;
         $min_payment = $amount / $term;
+        $min_payment = number_format($min_payment, 2, ".", "");
 
         $loanData = [
             'amount' =>  $request->amount,
@@ -63,6 +64,7 @@ class LoanService
 
 
     }
+
     public function createSchedulePayment( $id ){
 
         if( empty(SchedulePayment::where('loan_id', $id)->get()->toArray() )){
@@ -74,10 +76,15 @@ class LoanService
             $status = "UNPAID";
 
             $reminder = $amount / $term;
+            $reminder = number_format($reminder, 2, ".", "");
 
             $schduled_at = Carbon::now();
 
+            $sumReminder = 0;
             for($i=1;$i<=$term;$i++){
+                if($i == $term){
+                    $reminder = $amount - $sumReminder;
+                }
                 $schduled_at = $schduled_at->addDay(7);
                 SchedulePayment::create([
                     'amount' =>  $reminder,
@@ -87,6 +94,7 @@ class LoanService
                     'loan_id'=> $id,
                     'scheduled_at' =>  $schduled_at
                 ]);
+                $sumReminder +=  $reminder;
             }
         }
     }

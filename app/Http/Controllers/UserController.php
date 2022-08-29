@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Helpers\APIHelpers;
-use App\Http\Requests\LoginUserRequest;
-use App\Http\Requests\RegisterUserRequest;
-use App\Http\Resources\UserResource;
-use App\Http\Services\UserService;
 use App\Models\User;
+use App\Http\Helpers\APIHelpers;
+use App\Http\Services\UserService;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\LoginUserRequest;
 use Illuminate\Support\Facades\Request;
+use App\Http\Requests\RegisterUserRequest;
+
 
 class UserController extends Controller
 {

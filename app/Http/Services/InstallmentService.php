@@ -94,6 +94,7 @@ class InstallmentService
             return false;
         }
     }
+
     protected function isAmountGreaterLoanAmount($loan,$amount){
 
         if($amount <= $loan->amount){
@@ -102,6 +103,7 @@ class InstallmentService
             return false;
         }
     }
+
     protected function isGreaterOrEqalToMinPayment($loan,$amount){
 
         if ($amount >= $loan->min_payment ){
@@ -110,7 +112,6 @@ class InstallmentService
             return false;
         }
     }
-
 
     protected function isLoanSettled($loan){
         $paidInstallments = SchedulePayment::where(['loan_id'=> $loan->id,'status'=>"PAID"])->get()->count();
@@ -129,6 +130,7 @@ class InstallmentService
         }
         return false;
     }
+
     protected function isLastPaymentValidated($loan,$amount){
 
         if( $amount >= ($loan->amount - $loan->total_paid ) ){
@@ -140,10 +142,7 @@ class InstallmentService
     protected function setLastPayment($loan){
         $schedulePayment = SchedulePayment::where( ['loan_id'=> $loan->id,'status'=>"UNPAID"])
         ->update(['status'=>'PAID','paid_at' => Carbon::now()]);
-
     }
-
-
 
     protected function addInstallment($loan,$amount){
 
@@ -154,7 +153,6 @@ class InstallmentService
         $installment->client_id = $loan->client_id;
         $installment->save();
         return true;
-
     }
 
     protected function setLoanAsPaid($loan){

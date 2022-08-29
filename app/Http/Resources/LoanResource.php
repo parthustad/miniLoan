@@ -21,7 +21,7 @@ class LoanResource extends JsonResource
             'amount' => $this->amount,
             'term'=> $this->term,
             'loan_status'=> $this->loan_status,
-           'total_paid'=> $this->total_paid,
+            'total_paid'=> $this->total_paid,
             'min_payment'=> $this->min_payment,
             'installments'=>  InstallmentResource::collection($this->installments)
         ];

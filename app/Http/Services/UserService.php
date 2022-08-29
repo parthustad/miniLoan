@@ -12,11 +12,14 @@ class UserService
 {
     public $response = [];
 
+
     public function registerUser(RegisterUserRequest $request)
     {
         User::create( $request->all());
         return APIHelpers::createResponse(true,'User Created Sucessfully',$this->getLoggedinUserByEmail($request->email));
     }
+
+
     public function loginUser(LoginUserRequest $request)
     {
         if(!Auth::attempt($request->only(['email', 'password']))){
@@ -26,6 +29,7 @@ class UserService
         }
         return $this->response;
     }
+
     public function getLoggedinUserByEmail($email)
     {
         $user = User::firstWhere('email', $email);
