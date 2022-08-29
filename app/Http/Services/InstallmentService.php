@@ -18,7 +18,7 @@ use App\Http\Requests\RegisterUserRequest;
 
 class InstallmentService
 {
-    public function createInstallment(InstallmentRequest $request){
+    public function createInstallment(InstallmentRequest $request) : array{
 
         $amount = $request->amount;
         $loan = Loan::where('id',  $request->loan_id)->first();
@@ -87,7 +87,7 @@ class InstallmentService
 
     }
 
-    protected function isApproved($loan){
+    protected function isApproved($loan) :bool {
         if($loan->loan_status == "APPROVED"){
             return true;
         }else{
@@ -95,7 +95,7 @@ class InstallmentService
         }
     }
 
-    protected function isAmountGreaterLoanAmount($loan,$amount){
+    protected function isAmountGreaterLoanAmount($loan,$amount) :bool {
 
         if($amount <= $loan->amount){
             return true ;
@@ -104,7 +104,7 @@ class InstallmentService
         }
     }
 
-    protected function isGreaterOrEqalToMinPayment($loan,$amount){
+    protected function isGreaterOrEqalToMinPayment($loan,$amount) :bool {
 
         if ($amount >= $loan->min_payment ){
             return true;
@@ -113,7 +113,7 @@ class InstallmentService
         }
     }
 
-    protected function isLoanSettled($loan){
+    protected function isLoanSettled($loan) :bool {
         $paidInstallments = SchedulePayment::where(['loan_id'=> $loan->id,'status'=>"PAID"])->get()->count();
 
         if($loan->amount == $loan->total_paid && $paidInstallments == $loan->term){
@@ -123,7 +123,7 @@ class InstallmentService
 
     }
 
-    protected function isLastPayment($loan){
+    protected function isLastPayment($loan) :bool {
         $unpaid = SchedulePayment::where(['loan_id'=>$loan->id,'status'=>"UNPAID"])->get()->count();
         if($unpaid == 1 ){
             return true;
@@ -131,7 +131,7 @@ class InstallmentService
         return false;
     }
 
-    protected function isLastPaymentValidated($loan,$amount){
+    protected function isLastPaymentValidated($loan,$amount) :bool {
 
         if( $amount >= ($loan->amount - $loan->total_paid ) ){
             return true;
@@ -139,12 +139,12 @@ class InstallmentService
         return false;
     }
 
-    protected function setLastPayment($loan){
+    protected function setLastPayment($loan) : void{
         $schedulePayment = SchedulePayment::where( ['loan_id'=> $loan->id,'status'=>"UNPAID"])
         ->update(['status'=>'PAID','paid_at' => Carbon::now()]);
     }
 
-    protected function addInstallment($loan,$amount){
+    protected function addInstallment($loan,$amount) :bool {
 
         // Add installment in talbe
         $installment = new Installments();
@@ -155,12 +155,12 @@ class InstallmentService
         return true;
     }
 
-    protected function setLoanAsPaid($loan){
+    protected function setLoanAsPaid($loan) : void{
         $updateLoan =  Loan::where('id', $loan->id)
         ->update(['disbursed_at' =>  Carbon::now(),'loan_status'=>'PAID','extra_amount'=>0.00]);
     }
 
-    protected function setTotalPaidAmount($loan,$amount){
+    protected function setTotalPaidAmount($loan,$amount) : void{
 
         $total_paid = Installments::where('loan_id', $loan->id)->sum('amount');
 
@@ -170,7 +170,7 @@ class InstallmentService
 
     }
 
-    protected function setSchedulePaymentPaidStatus($loan,$amount){
+    protected function setSchedulePaymentPaidStatus($loan,$amount) : void{
 
         $min_payment = $loan->min_payment;
         $fraction = (int) (($amount + $loan->extra_amount) / $min_payment );

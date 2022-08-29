@@ -24,7 +24,7 @@ class ApproveLoanRequest extends FormRequest
      */
     public function rules()
     {
-    
+
         return [
             'id' => 'required|exists:loans,id'
         ];

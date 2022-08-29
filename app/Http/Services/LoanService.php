@@ -18,7 +18,7 @@ class LoanService
 {
     protected $response = [];
 
-    public function createLoan(LoanRequest $request)
+    public function createLoan(LoanRequest $request) : array
     {
         $amount =  $request->amount;
         $term =  $request->term;
@@ -36,11 +36,13 @@ class LoanService
 
     }
 
-    public function getUserLoan($request){
+    public function getUserLoan($request) : array
+    {
         return APIHelpers::createResponse(true,'Loan loaded',LoanResource::collection($request->user()->loans()->get()));
     }
 
-    public function approveLoan(ApproveLoanRequest $request){
+    public function approveLoan(ApproveLoanRequest $request) : array
+    {
 
         $loan = Loan::where('id',  $request->id)->first();
 
@@ -65,7 +67,8 @@ class LoanService
 
     }
 
-    protected function createSchedulePayment( $id ){
+    protected function createSchedulePayment( $id ) : void
+    {
 
         if( empty(SchedulePayment::where('loan_id', $id)->get()->toArray() )){
 

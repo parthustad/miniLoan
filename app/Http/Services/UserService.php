@@ -13,24 +13,22 @@ class UserService
     public $response = [];
 
 
-    public function registerUser(RegisterUserRequest $request)
+    public function registerUser(RegisterUserRequest $request) : array
     {
         User::create( $request->all());
         return APIHelpers::createResponse(true,'User Created Sucessfully',$this->getLoggedinUserByEmail($request->email));
     }
 
-
-    public function loginUser(LoginUserRequest $request)
+    public function loginUser(LoginUserRequest $request)  : array
     {
         if(!Auth::attempt($request->only(['email', 'password']))){
             return APIHelpers::createResponse(false,'Invalid Credentials',[]);
         }else{
             return APIHelpers::createResponse(true,'Loggedin Sucessfully',$this->getLoggedinUserByEmail($request->email));
         }
-        return $this->response;
     }
 
-    protected function getLoggedinUserByEmail($email)
+    protected function getLoggedinUserByEmail($email) : AuthUserResource
     {
         $user = User::firstWhere('email', $email);
         $user->token =  $user->createToken("API TOKEN")->plainTextToken;
