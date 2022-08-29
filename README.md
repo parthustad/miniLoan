@@ -30,7 +30,7 @@ PHP 8 and mysql must be installed
 
 
 ## Repayment condition checks
-![Screenshot](repayment-checks.png)
+![Screenshot](repayment-checks.PNG)
 
 
 
