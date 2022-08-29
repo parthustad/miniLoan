@@ -26,8 +26,8 @@ class LoanService
         $min_payment = number_format($min_payment, 2, ".", "");
 
         $loanData = [
-            'amount' =>  $request->amount,
-            'term' =>   $request->term,
+            'amount' =>  $amount,
+            'term' =>  $term,
             'loan_status' => 'PENDING' ,
             'min_payment' =>  $min_payment,
             'reviewer_id' => 1
@@ -50,6 +50,7 @@ class LoanService
             $amount =  $loan->amount;
             $term =  $loan->term;
             $min_payment = $amount / $term;
+            $min_payment = number_format($min_payment, 2, ".", "");
 
 
             $loan =  Loan::where('id', $request->id)
