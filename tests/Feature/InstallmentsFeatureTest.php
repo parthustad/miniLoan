@@ -156,7 +156,7 @@ class InstallmentsFeatureTest extends TestCase
     }
     public function test_multiple_installments(){
         $loan_amount  = 10;
-        $term = 3;
+        $term = 7;
         $amounts = [9.5,0.5];
         $arrToCheck = count($amounts) - 1;
 
