@@ -6,11 +6,9 @@ This project is test task for ASPIREAPP. Basically, Cleint and reviewer can regi
 
 ![Screenshot](repayment-checks.PNG)
 
-
 ## Feature Test cases
 
 ![Screenshot](FeatureTest.PNG)
-
 
 ## Installation
 
@@ -20,9 +18,11 @@ This project is test task for ASPIREAPP. Basically, Cleint and reviewer can regi
 
 3. **Create Database with name test for testing**
 
-4. run **php artisan migrate:fresh --seed**
+4. **Set Test databse credentials in phpunit.xml**
 
-5. run **php artisan serve**
+5. run **php artisan migrate:fresh --seed**
+
+6. run **php artisan serve**
 
 ## How to Use
 
@@ -34,7 +34,6 @@ This project is test task for ASPIREAPP. Basically, Cleint and reviewer can regi
 
 4. **CreateInstallments** endpoint is used to pay for the installments
 
-
 ## Postman Collection
 
 Download Postman Collection, [click here.](https://www.getpostman.com/collections/f8b0e1759d0e8adcfd43)
@@ -42,7 +41,7 @@ in case of link is working: Json collection is added at root level
 
 ## Test
 
- Feature test is added. databse with name **test** must be created to test.
+Feature test is added. databse with name **test** must be created to test. **Set Test databse credentials in phpunit.xml**
 
 ## License
 
