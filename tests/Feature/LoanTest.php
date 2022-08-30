@@ -23,7 +23,7 @@ class LoanTest extends TestCase
         // alternatively you can call
         // $this->seed();
     }
-    public function test_guest_user_can_not_create_role_not_allowed()
+    public function test_guest_user_can_not_create_role()
     {
         $response = $this->post(route('loans.create'),[
             'amount'=> 10.00,
@@ -31,7 +31,7 @@ class LoanTest extends TestCase
         ], ['accept' => 'application/json']);
        $response->assertStatus(401);
     }
-    public function test_role_other_than_client_can_not_create_loan_not_allowed()
+    public function test_role_other_than_client_can_not_create_loan()
     {
         $user =  User::factory()->create(['role'=>"REVIEWER"]);
         Sanctum::actingAs($user);
