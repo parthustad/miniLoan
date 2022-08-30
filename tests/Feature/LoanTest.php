@@ -64,8 +64,8 @@ class LoanTest extends TestCase
         Sanctum::actingAs($user);
 
         $response = $this->post(route('loans.create'),[
-            'amount'=> 10.00,
-            'term'=> 5
+            'amount'=>80,
+            'term'=>8
         ]);
 
         $response->assertStatus(200);

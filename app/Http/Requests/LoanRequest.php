@@ -27,7 +27,7 @@ class LoanRequest extends FormRequest
     {
 
         return [
-            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'amount' => 'required|min:1|max:1000000|regex:/^\d+(\.\d{1,2})?$/',
             'term' => 'required|integer|lt:amount|min:1'
         ];
     }
