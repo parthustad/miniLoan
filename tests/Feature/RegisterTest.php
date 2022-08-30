@@ -23,7 +23,7 @@ class RegisterTest extends TestCase
     }
 
 
-    public function test_registration_without_email()
+    public function test_registration_without_email_not_allowed()
     {
         $response = $this->post(route('register'),[
             'name'=> "abc",
@@ -35,7 +35,7 @@ class RegisterTest extends TestCase
        $response->assertStatus(422);
     }
 
-    public function test_registration_without_password()
+    public function test_registration_without_password_not_allowed()
     {
         $response = $this->post(route('register'),[
             'name'=> "abc",
@@ -48,7 +48,7 @@ class RegisterTest extends TestCase
     }
 
 
-    public function test_with_role_other_than_reviewer_and_client()
+    public function test_with_role_other_than_reviewer_and_client_not_allowed()
     {
         $response = $this->post(route('register'),[
                 'name'=> "abc",

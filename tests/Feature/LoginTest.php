@@ -21,7 +21,7 @@ class LoginTest extends TestCase
         // alternatively you can call
         // $this->seed();
     }
-    public function test_login_without_email()
+    public function test_login_without_email_not_allowed()
     {
         $response = $this->post(route('login'),[
                 'password'=> "123456"
@@ -29,7 +29,7 @@ class LoginTest extends TestCase
 
         $response->assertStatus(422);
     }
-    public function test_login_without_password()
+    public function test_login_without_password_not_allowed()
     {
         $response = $this->post(route('login'),[
                 'email'=> "a@abc.com"
@@ -38,7 +38,7 @@ class LoginTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function test_login_with_invalid_credentials()
+    public function test_login_with_invalid_credentials_not_allowed()
     {
         $response = $this->post(route('login'),[
                 'email'=> "reviewer@aspire.io",

@@ -24,7 +24,7 @@ class ApproveLoanTest extends TestCase
         // alternatively you can call
         // $this->seed();
     }
-    public function test_gest_user_can_not_approve_loan()
+    public function test_guest_user_can_not_approve_loan()
     {
         $response = $this->put(route('loans.statusUpdate'),[
             'id'=> 15
@@ -86,7 +86,7 @@ class ApproveLoanTest extends TestCase
         ], ['accept' => 'application/json']);
 
        $data =  $response->json();
-       
+
         if($data['status']==false){
             $response->assertStatus(200);
         }

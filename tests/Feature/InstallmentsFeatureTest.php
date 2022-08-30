@@ -24,7 +24,7 @@ class InstallmentsFeatureTest extends TestCase
         // alternatively you can call
         // $this->seed();
     }
-    public function test_gest_user_can_not_create_installments()
+    public function test_guest_user_can_not_create_installments()
     {
         $response = $this->post(route('installments.create'),[
             'amount'=> 15,
