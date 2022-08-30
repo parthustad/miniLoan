@@ -27,21 +27,6 @@ use App\Http\Controllers\LoginController;
 Route::post('/register', RegisterController::class)->name('register');
 Route::post('/login', LoginController::class)->name('login');
 
-
-Route::get('/reset', function(Request $request)
-{
-
-    //Artisan::call('cache:clear');
-    Installments::where('loan_id',1)->delete();
-    SchedulePayment::where('loan_id',1) ->update(['status' => 'UNPAID','paid_at'=>NULL]);
-
-    $updateLoan =  Loan::where('id', 1)
-    ->update(['total_paid' => 0,'extra_amount'=>0,'loan_status'=>"APPROVED"]);
-
-
-});
-
-
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/loans', [LoansController::class,'store'])->name('loans.create');
@@ -52,3 +37,18 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/installments', [InstallmentController::class,'store'])->name('installments.create');
     });
 });
+
+
+
+//This function is used to reset loan.
+
+/*
+Route::get('/reset', function(Request $request)
+{
+    Installments::where('loan_id',1)->delete();
+    SchedulePayment::where('loan_id',1) ->update(['status' => 'UNPAID','paid_at'=>NULL]);
+
+    $updateLoan =  Loan::where('id', 1)
+    ->update(['total_paid' => 0,'extra_amount'=>0,'loan_status'=>"APPROVED"]);
+});
+*/
