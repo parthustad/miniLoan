@@ -40,7 +40,7 @@ class InstallmentService
             return APIHelpers::createResponse(false,'Loan is already setlled',new LoanResource($loan));
         }
         if($amount > $remaining_amount){
-            return APIHelpers::createResponse(false,'Amount is greater than remaining amout',new LoanResource($loan));
+            return APIHelpers::createResponse(false,'Amount is greater than remaining amout - '.$remaining_amount ,new LoanResource($loan));
         }
 
 

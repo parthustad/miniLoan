@@ -156,12 +156,11 @@ class InstallmentsFeatureTest extends TestCase
     }
     public function test_multiple_installments(){
         $loan_amount  = 10;
-        $term = 7;
-        $amounts = [9.5,0.5];
+        $term = 3;
+        $amounts = [3.33, 3.33, 3.34];
         $arrToCheck = count($amounts) - 1;
 
         $response = $this->createInstallmenttest($loan_amount,$term,$amounts);
-
         if($response[$arrToCheck]->json()['status']==true){
             $response[$arrToCheck]->assertStatus(200);
          }
